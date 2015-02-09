@@ -13,7 +13,7 @@
 /**
  * Name........: statsprocessor (sp)
  * Description.: Word-generator based on per-position markov-chains
- * Version.....: 0.11
+ * Version.....: 0.12
  * Autor.......: Jens Steube <jens.steube@gmail.com>
  * License.....: MIT
  */
@@ -21,7 +21,7 @@
 #define CHARSIZ         0x100
 #define OUTBUFSIZ       BUFSIZ
 
-#define VERSION_BIN     11
+#define VERSION_BIN     12
 #define PW_MIN          1
 #define PW_MAX          64
 #define THRESHOLD       0
