@@ -834,6 +834,7 @@ int main (int argc, char *argv[])
 
   cs_t *markov_css_buf = (cs_t *) calloc (PW_MAX * CHARSIZ, sizeof (cs_t));
 
+  uint32_t lastkey=0;
   for (i = 0; i < root_cnt; i++)
   {
     uint32_t pw_pos = i / CHARSIZ;
@@ -842,13 +843,39 @@ int main (int argc, char *argv[])
 
     if (cs->cs_len == threshold) continue;
 
-    uint32_t key = root_table_buf[i].key;
+	uint32_t key = 0;
+    key=root_table_buf[i].key;
+    if (key<10)
+    {
+        if (cs->cs_len>0)
+        {
+            uint32_t tmpkey=markov_table_buf_by_key[cs->cs_len-1][cs->cs_buf[cs->cs_len-1]]->key;
+            if (tmpkey!=0)
+            {
+                bool found=false;
+                for (int m=0;m<CHARSIZ;m++)
+                {
+                    if (cs->cs_buf[m]==0) break;
+                    if (tmpkey==cs->cs_buf[m]) { found=true; break; }
+                }
+                if (!found)
+                {
+                    key=tmpkey;
+                    mask_css[pw_pos].cs_uniq[key]=0;
+                    cs->cs_buf[cs->cs_len] = key;
+                    cs->cs_len++;
+                    lastkey=key;
+                }
+            }
+        }
+    }
 
     if (mask_css[pw_pos].cs_uniq[key] == 0) continue;
 
     cs->cs_buf[cs->cs_len] = key;
 
     cs->cs_len++;
+	lastkey=key;
   }
 
   for (i = 0; i < markov_cnt; i++)
