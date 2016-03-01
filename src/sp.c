@@ -1025,9 +1025,18 @@ int main (int argc, char *argv[])
     }
 
     uint64_t l_ctx;
+    /* we want to iterate through modulo last, so store it here */
+    uint64_t r_ctx_final = r_ctx_max;
 
     for (l_ctx = l_ctx_min; l_ctx < l_ctx_max; l_ctx++)
     {
+      /* iterate through length first, and modulo last */
+      if(l_ctx < l_ctx_max-1)
+      {
+        r_ctx_max = r_cnt;
+      } else {
+        r_ctx_max = r_ctx_final;
+      }
       sp_exec (l_ctx, pw_buf, root_css_buf, markov_css_buf, 0, l_len);
 
       uint32_t out_pos = 0;
@@ -1064,7 +1073,6 @@ int main (int argc, char *argv[])
     }
 
     l_ctx_min = 0;
-    l_ctx_max = l_cnt;
 
     if (last_iter) break;
   }
