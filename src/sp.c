@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <getopt.h>
 #include <fcntl.h>
+#include <stdbool.h>
 
 /**
  * Name........: statsprocessor (sp)
