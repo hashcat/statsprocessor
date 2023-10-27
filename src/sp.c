@@ -835,7 +835,6 @@ int main (int argc, char *argv[])
 
   cs_t *markov_css_buf = (cs_t *) calloc (PW_MAX * CHARSIZ, sizeof (cs_t));
 
-  uint32_t lastkey=0;
   for (i = 0; i < root_cnt; i++)
   {
     uint32_t pw_pos = i / CHARSIZ;
@@ -865,7 +864,6 @@ int main (int argc, char *argv[])
                     mask_css[pw_pos].cs_uniq[key]=0;
                     cs->cs_buf[cs->cs_len] = key;
                     cs->cs_len++;
-                    lastkey=key;
                 }
             }
         }
@@ -876,7 +874,6 @@ int main (int argc, char *argv[])
     cs->cs_buf[cs->cs_len] = key;
 
     cs->cs_len++;
-	lastkey=key;
   }
 
   for (i = 0; i < markov_cnt; i++)
